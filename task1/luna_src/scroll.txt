@@ -1,0 +1,38 @@
+// Макроопределения
+/*
+    %all_ranks% - множество всех номеров узлов
+    %ranks_count% - количество доступных узлов
+*/
+
+// Макроопределение констант
+define {
+    N = 6; // число процессов
+    N_FD = 12; // число фрагментов данных
+    VECTOR_SIZE = 1000;
+}
+
+// Описание исполнения
+execution {
+    // Основной вариант
+    ordered distributed run {
+        initVectorX[1..N_DF],
+        initVectorY[1..N_DF],
+        sumResultVectorParts[0..N_DF]
+    } on rank %all_ranks%;
+
+    /* Возможные варианты */
+    // unordered distributed run initVectorX[0..N_DF] on ranks %all_ranks%;
+    // distributed run initVectorX[0..N_DF] on ranks 0..3; // ~ 0, 1, 2, 3
+    // distributed run initVectorX[0..N_ DF] on ranks 0, 1, 3;
+    // run initVectorX[0] on rank 0;
+
+    /* Ещё один вариант
+        ordered distributed run initVectorY[0..N_DF] on rank %all_ranks%;
+        ordered distributed run initVectorY[0..N_DF] on rank %all_ranks%;
+        ordered distributed run sumResultVectorParts[0..N_DF] on rank %all_ranks%
+    */
+
+    sequential {
+        ordered distributed run printVector[0..N_DF] on rank %all_ranks%;
+    }
+}
