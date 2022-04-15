@@ -1,0 +1,19 @@
+// Свертка для программы умножение матрицы на вектор
+
+define {
+    N = 30;
+    M = 30;
+    N_DF = 6;
+}
+
+execution {
+    run {
+		initVector,
+        initMatrix[1..N_DF],
+        getPartResultVector[1..N_DF]
+    } on ranks %all_ranks%;
+
+    sequential {
+        run print[1..N_DF] on ranks %all_ranks%;
+    }
+}
