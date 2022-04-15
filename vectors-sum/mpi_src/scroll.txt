@@ -1,0 +1,13 @@
+define {
+    N_FD = 12; // число фрагментов данных
+}
+
+execution {
+    run {
+        initVectorX[1..N_DF],
+        initVectorY[1..N_DF],
+        sumResultVectorParts[1..N_DF]
+    } on ranks $ALL_RANKS;
+
+    run printVector[1..N_DF] on rank $ROOT_RANK;
+}
