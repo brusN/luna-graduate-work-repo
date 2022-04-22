@@ -1,13 +1,13 @@
 define {
-    N_FD = 12; // число фрагментов данных
+    N_DF = 12; // число фрагментов данных
 }
 
 execution {
-    run {
-        initVectorX[1..N_DF],
-        initVectorY[1..N_DF],
-        sumResultVectorParts[1..N_DF]
+    run for i=1..$N_DF {
+        initVectorX[i],
+        initVectorY[i],
+        sumResultVectorParts[i]
     } on ranks $ALL_RANKS;
 
-    run printVector[1..N_DF] on rank $ROOT_RANK;
+    run for i=1..$N_DF printVector[i] on rank $ROOT_RANK;
 }
