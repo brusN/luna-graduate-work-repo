@@ -10,4 +10,4 @@
 
 [Репозиторий LuNA на Gitlab](https://gitlab.ssd.sscc.ru/luna/luna)
 
-[Записи встреч](https://drive.google.com/file/d/18pJ-eGX4KVXZF7BLY8kmmYgTkoJOKJak/view?usp=sharing)
+[Записи встреч](https://drive.google.com/drive/folders/1pSPR5MdEmhzJmLOXvNiVgsi6LKiZuSQP?usp=sharing)
