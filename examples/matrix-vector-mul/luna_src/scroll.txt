@@ -1,0 +1,14 @@
+define {
+    N_DF = 6;
+}
+
+execution {
+    run initVector on rank $ROOT_RANK;
+
+    run for i=1..$N_DF {
+        initMatrix[i],
+        getPartResultVector[i]
+    } on ranks $ALL_RANKS;
+
+    run for i=1..$N_DF print[i] on rank $ROOT_RANK;
+}
