@@ -1,0 +1,16 @@
+import c_initVector(name, int, int) as initVector;
+import c_sumVectors(value, value, name) as sumVectors;
+import c_printVector(value, int) as printVector;
+
+#define N 4
+#define VECTOR_SIZE 12
+
+sub main() {
+    df x, y, z;
+    for i=0..$N-1 {
+        cf a[i]: initVector(x[i], $VECTOR_SIZE / $N, i, 1);
+        cf b[i]: initVector(y[i], $VECTOR_SIZE / $N, i, 2);
+        cf c[i]: sumVectors(x[i], y[i], z[i]);
+        cf d[i]: printVector(z[i], i);
+    }
+}

@@ -1,0 +1,31 @@
+import c_initVector(name, int, int) as initVector;
+import c_mulVectors(value, value, name) as mulVectors;
+import c_sum_result(value, value, name) as sumResult;
+import c_copy_result(value, name) as copyResult;
+import c_printResult(value) as printResult;
+
+#define N 4
+#define SIZE 12
+
+sub main() {
+	df vector1, vector2, result, scalar;
+	for i=0..$N-1 {
+		cf initVector1[i]: initVector(vector1[i], $SIZE / $N, i, 1);
+		cf initVector2[i]: initVector(vector2[i], $SIZE / $N, i, 2);
+		cf scalarVectors[i]: mulVectors(vector1[i], vector2[i], result[i]);
+	}
+
+	// Reduction of parts values
+	if $N == 1 {
+		cf copyResult_1: copyResult(result[0], scalar[0]);
+	}
+
+	if $N > 1 {
+		cf sumResult_1: sumResult(result[0], result[1], scalar[1]);
+		for k=2..$N-1 {
+			cf sumRes[k]: sumResult(result[k], scalar[k-1], scalar[k]);
+		}
+	}
+    
+	cf printScalar: printResult(scalar[$N-1]);
+}

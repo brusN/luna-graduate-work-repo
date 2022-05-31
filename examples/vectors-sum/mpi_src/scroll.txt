@@ -1,0 +1,13 @@
+define {
+    N = 4; 
+}
+
+execution {
+    run for i=1..$N {
+        initVectorX[i],
+        initVectorY[i],
+        sumResultVectorParts[i]
+    } on ranks $ALL_RANKS;
+
+    run for i=1..$N_DF printVector[i] on rank $ROOT_RANK;
+}
