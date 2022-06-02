@@ -1,0 +1,71 @@
+#!/usr/bin/luna
+/*
+ Matrix multiplication.
+*/
+
+import c_init(int, name) as init;
+import c_init_submatrix(int `file, int `row, int `col, int `height, int `width, name `dest) as init_mat;
+import c_mult_matrix(value `a, value `b, name `c) as mult_mat;
+import c_sum_matrix(value `a, value `b, name `c) as sum_mat;
+import c_save_submatrix(value `a, int `row, int `col) as save_mat;
+import c_copy_matrix(value `a, name `b) as copy_mat;
+
+
+C++ sub empty() ${<END}
+{
+	// do nothing
+}END
+
+#define FG_SIZE 40
+#define FG_COUNT 10
+
+sub calc_mat(name A, name B, name C, int i, int j, int N)
+{
+	df Ctmp, Csum;
+
+	for k=0..N-1
+	{
+		cf f[i][j][k]: mult_mat(A[i][k], B[k][j], Ctmp[k]);
+	}
+
+	if N>1
+		sum_mat(Ctmp[0], Ctmp[1], Csum[1]);
+	if N==1
+		copy_mat(Ctmp[0], Csum[0]);
+
+	for k=2..N-1
+		cf sum[k]: sum_mat(Ctmp[k], Csum[k-1], Csum[k]);
+
+	copy_mat(Csum[N-1], C);
+}
+
+sub main()
+{
+	df A, B, C, N, M;
+
+	init($FG_COUNT, N);
+	init($FG_SIZE, M);
+
+	for i=0..N-1
+		for j=0..N-1
+		{
+			cf initA[i][j]: init_mat(0, i*M, j*M, M, M, A[i][j]) @ {
+				request N;
+				req_count A[i][j]=N;
+			};
+			cf initB[i][j]: init_mat(1, i*M, j*M, M, M, B[i][j]) @ {
+				request N;
+				req_count B[i][j]=N;
+			};
+
+			cf calc[i][j]: calc_mat(A, B, C[i][j], i, j, N) @ {
+			    stealable;
+			};
+
+			empty() @ {
+				request C[i][j];
+				delete C[i][j];
+			};
+		}
+}
+

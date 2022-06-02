@@ -1,0 +1,25 @@
+define {
+    N = 10; // FG_COUNT
+    M = 40; // FG_SIZE
+}
+
+// initA[i][j]
+// initB[i][j]
+// calc[i][j]
+
+execution {
+   for i=0..$N-1 {
+		arbitrary run for j=0..$N-1 {
+			initA[i][j],
+			initB[i][j]
+		} on rank i;
+    }
+
+    for i=0..$N-1 {
+        for j=0..$N-1 {
+		    run calc[i][j] rank i;
+        }
+    }
+
+    /* Очистка мусора? */
+}
